@@ -1,7 +1,7 @@
 // Generated using webpack-cli https://github.com/webpack/webpack-cli
 
 const path = require('path');
-
+const HtmlWebpackPlugin = require('html-webpack-plugin')
 const isProduction = process.env.NODE_ENV == 'production';
 
 
@@ -9,10 +9,13 @@ const config = {
     entry: './src/index.js',
     output: {
         path: path.resolve(__dirname, 'dist'),
+        clean: true
     },
     plugins: [
-        // Add your plugins here
-        // Learn more about plugins from https://webpack.js.org/configuration/plugins/
+        new HtmlWebpackPlugin({
+            title: 'Custom template',
+            template: './src/index.html'
+        })
     ],
     module: {
         rules: [
@@ -23,7 +26,11 @@ const config = {
             {
                 test: /\.css$/i,
                 use: ['style-loader', 'css-loader'],
-            }
+            },
+            {
+                test: /\.(png|svg|jpg|jpeg|gif|webp)$/i,
+                type: 'asset/resource',
+            },
         ],
     },
     devtool: 'inline-source-map',
